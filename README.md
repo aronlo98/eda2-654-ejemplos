@@ -7,6 +7,10 @@ Este repositorio esta pensado como un espacio de documentacion y apoyo para la c
 - [Arboles AVL](./arboles-avl/README.md)
 - [Arboles Rojos-Negros](./arboles-rojos-negros/README.md)
 - [Grafos](./grafos/README.md)
+- [Grafos Bipartitos](./grafos-bipartitos/README.md)
+- [Recorridos en Grafos](./recorridos-grafos/README.md)
+- [Árboles de Expansión Mínima](./arboles-expansion-minima/README.md)
+- [Ruta Mínima (Dijkstra)](./ruta-minima/README.md)
 
 ## Objetivo
 
