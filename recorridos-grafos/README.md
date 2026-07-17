@@ -63,17 +63,17 @@ DFS(nodo_inicio):
 ```
 *(Nota: DFS también se suele implementar de forma muy elegante usando recursividad en lugar de crear una Pila manualmente).*
 
-## Ejemplos de Ejecución (Carrusel Interactivo)
+## Ejemplos de Ejecución (Paso a Paso)
 
-Desliza para ver la ejecución paso a paso de ambos algoritmos. Para estos ejemplos utilizaremos un **grafo complejo de 6 nodos** diseñado especialmente para tener convergencias (C y D apuntan a E), caminos múltiples (C apunta a E y F), y un **ciclo de regreso peligroso (F apunta a B)**, ilustrado en **arte ASCII** puro.
+A continuación se muestra la ejecución paso a paso de ambos algoritmos. Para estos ejemplos utilizaremos un **grafo complejo de 6 nodos** diseñado especialmente para tener convergencias (C y D apuntan a E), caminos múltiples (C apunta a E y F), y un **ciclo de regreso peligroso (F apunta a B)**, ilustrado en **arte ASCII** puro.
 
 *Leyenda: `[ X ]` = No visitado, `* X *` = Visitado*
 
 ### Recorrido BFS (Nivel por Nivel)
 
-````carousel
 **Planteamiento del Problema (BFS)**
 El objetivo es recorrer este grafo partiendo del nodo `A` utilizando una estructura de Cola (Queue). Para evitar ciclos infinitos, marcamos el nodo apenas entra a la cola.
+
 ```text
            [ A ]
           /     \
@@ -86,9 +86,10 @@ El objetivo es recorrer este grafo partiendo del nodo `A` utilizando una estruct
  |       v       v
  '---- [ F ]<----'
 ```
-<!-- slide -->
+
 **Paso 1**
 Iniciamos en `A`. Lo marcamos y encolamos. (Cola: `A`)
+
 ```text
            * A *
           /     \
@@ -101,9 +102,10 @@ Iniciamos en `A`. Lo marcamos y encolamos. (Cola: `A`)
  |       v       v
  '---- [ F ]<----'
 ```
-<!-- slide -->
+
 **Paso 2**
 Desencolamos `A`. Visitamos y encolamos a sus vecinos `B` y `D`. (Cola: `B, D`)
+
 ```text
            * A *
           /     \
@@ -116,9 +118,10 @@ Desencolamos `A`. Visitamos y encolamos a sus vecinos `B` y `D`. (Cola: `B, D`)
  |       v       v
  '---- [ F ]<----'
 ```
-<!-- slide -->
+
 **Paso 3**
 Desencolamos `B`. Su único vecino es `C`. Lo marcamos y encolamos. (Cola: `D, C`)
+
 ```text
            * A *
           /     \
@@ -131,9 +134,10 @@ Desencolamos `B`. Su único vecino es `C`. Lo marcamos y encolamos. (Cola: `D, C
  |       v       v
  '---- [ F ]<----'
 ```
-<!-- slide -->
+
 **Paso 4**
 Desencolamos `D`. Su vecino es `E`. Lo marcamos y encolamos. (Cola: `C, E`)
+
 ```text
            * A *
           /     \
@@ -146,9 +150,10 @@ Desencolamos `D`. Su vecino es `E`. Lo marcamos y encolamos. (Cola: `C, E`)
  |       v       v
  '---- [ F ]<----'
 ```
-<!-- slide -->
+
 **Paso 5**
 Desencolamos `C`. Sus vecinos son `E` y `F`. Como `E` ya fue marcado en el paso anterior, solo encolamos `F`. (Cola: `E, F`)
+
 ```text
            * A *
           /     \
@@ -161,10 +166,12 @@ Desencolamos `C`. Sus vecinos son `E` y `F`. Como `E` ya fue marcado en el paso 
  |       v       v
  '---- * F *<----'
 ```
-<!-- slide -->
+
 **Paso 6 y final**
 Desencolamos `E` (su vecino `F` ya está marcado). Luego desencolamos `F` (su vecino `B` ¡ya estaba marcado desde el inicio!, evitando el ciclo).
+
 **Orden BFS: A, B, D, C, E, F**
+
 ```text
            * A *
           /     \
@@ -177,13 +184,12 @@ Desencolamos `E` (su vecino `F` ya está marcado). Luego desencolamos `F` (su ve
  |       v       v
  '---- * F *<----'
 ```
-````
 
 ### Recorrido DFS (A lo Profundo)
 
-````carousel
 **Planteamiento del Problema (DFS)**
 El objetivo es recorrer el mismo grafo partiendo del nodo `A` utilizando una Pila (Stack). También marcamos al entrar a la pila para evitar duplicados.
+
 ```text
            [ A ]
           /     \
@@ -196,9 +202,10 @@ El objetivo es recorrer el mismo grafo partiendo del nodo `A` utilizando una Pil
  |       v       v
  '---- [ F ]<----'
 ```
-<!-- slide -->
+
 **Paso 1**
 Inicialmente apilamos y marcamos `A`. Lo desapilamos/visitamos, y apilamos a sus vecinos `D` y `B`. (Pila: `D, B`)
+
 ```text
            * A *
           /     \
@@ -211,9 +218,10 @@ Inicialmente apilamos y marcamos `A`. Lo desapilamos/visitamos, y apilamos a sus
  |       v       v
  '---- [ F ]<----'
 ```
-<!-- slide -->
+
 **Paso 2**
 El tope es `B`. Desapilamos `B`. Su vecino es `C`. Lo apilamos y marcamos. (Pila: `D, C`)
+
 ```text
            * A *
           /     \
@@ -226,9 +234,10 @@ El tope es `B`. Desapilamos `B`. Su vecino es `C`. Lo apilamos y marcamos. (Pila
  |       v       v
  '---- [ F ]<----'
 ```
-<!-- slide -->
+
 **Paso 3**
 El tope es `C`. Desapilamos `C`. Sus vecinos son `F` y `E`. Ambos los apilamos. (Pila: `D, F, E`)
+
 ```text
            * A *
           /     \
@@ -241,9 +250,10 @@ El tope es `C`. Desapilamos `C`. Sus vecinos son `F` y `E`. Ambos los apilamos. 
  |       v       v
  '---- * F *<----'
 ```
-<!-- slide -->
+
 **Paso 4**
 El tope es `E`. Desapilamos `E`. Su único vecino es `F`, pero ya está marcado (¡cruce de ramas evitado!). (Pila: `D, F`)
+
 ```text
            * A *
           /     \
@@ -256,9 +266,10 @@ El tope es `E`. Desapilamos `E`. Su único vecino es `F`, pero ya está marcado 
  |       v       v
  '---- * F *<----'
 ```
-<!-- slide -->
+
 **Paso 5**
 El tope es `F`. Desapilamos `F`. Su único vecino es `B`, pero ya está marcado (¡ciclo infinito evitado!). (Pila: `D`)
+
 ```text
            * A *
           /     \
@@ -271,10 +282,12 @@ El tope es `F`. Desapilamos `F`. Su único vecino es `B`, pero ya está marcado 
  |       v       v
  '---- * F *<----'
 ```
-<!-- slide -->
+
 **Paso 6 y final**
 El tope final es `D`. Desapilamos `D`. Su vecino es `E`, el cual ya está marcado, así que terminamos.
+
 **Orden DFS: A, B, C, E, F, D**
+
 ```text
            * A *
           /     \
@@ -287,7 +300,6 @@ El tope final es `D`. Desapilamos `D`. Su vecino es `E`, el cual ya está marcad
  |       v       v
  '---- * F *<----'
 ```
-````
 
 ## Simuladores
 
