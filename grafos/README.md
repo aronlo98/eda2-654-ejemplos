@@ -1,101 +1,42 @@
 # Grafos
 
-Este documento contiene material de apoyo para el tema de **grafos** en el curso de **Estructuras de Datos 2**. Un grafo es una estructura de datos que permite representar **relaciones** entre objetos, por ejemplo conexiones entre personas, ciudades, computadoras o estados de un sistema.
+Este documento contiene material de apoyo para el tema de **grafos** en el curso de **Estructuras de Datos 2**. Un grafo es una estructura formada por un conjunto de puntos conectados mediante líneas, muy útil para representar relaciones en aplicaciones reales como **redes sociales**, **mapas y sistemas GPS**, **redes de computadoras** y **videojuegos**.
 
-En un grafo:
+De manera formal, un grafo `G = (V, E)` es un par ordenado donde `V` es un conjunto no vacío de vértices y `E` es un conjunto de aristas.
 
-- los puntos se llaman **vertices**,
-- las conexiones se llaman **aristas**.
+## Propiedades y Definiciones
 
-De manera formal, un grafo puede representarse como un par `G = (V, E)` donde:
+Todo grafo se rige por conceptos básicos que permiten analizarlo:
 
-- `V` es el conjunto de vertices,
-- `E` es el conjunto de aristas que conectan pares de vertices.
+1. **Vértices y Aristas**: Los puntos se denominan *vértices* y las líneas de conexión *aristas* (o *edges*).
+2. **Dirección**: Un grafo puede ser **no dirigido** (las aristas se transitan en ambos sentidos) o **dirigido** (las aristas tienen una dirección definida, como flechas).
+3. **Camino (Path)**: Secuencia de aristas que permite llegar desde un vértice *v* hasta un vértice *w* sin repetir aristas.
+4. **Circuito (Circuit)**: Un camino que comienza y termina en el mismo vértice.
+5. **Ciclo (Cycle)**: Un circuito en el que ningún vértice se repite, excepto el primero y el último.
+6. **Conectividad**: Un grafo está conectado si existe un camino entre cualquier par de vértices.
 
-## Aplicaciones
+## Idea General de Representación
 
-Los grafos aparecen en muchos problemas reales, por ejemplo:
+Para representar computacionalmente un grafo existen diversas formas. Las más comunes son:
 
-- **redes sociales**,
-- **mapas y sistemas GPS**,
-- **redes de computadoras**,
-- **videojuegos**,
-- **recomendadores y rutas**.
+1. **Matriz de Adyacencia**: Utiliza una tabla bidimensional `n x n` para indicar con `1`s y `0`s si existe una conexión. Requiere una complejidad espacial de **Θ(n^2)**.
+2. **Lista de Adyacencia**: Para cada vértice, se mantiene una lista con todos sus vértices vecinos. Su complejidad espacial es **Θ(n+m)** (donde *n* es vértices y *m* aristas).
 
-## Tipos de Grafos
+El objetivo es elegir la mejor representación considerando el tiempo y el espacio necesario para los algoritmos a utilizar.
 
-### Grafo no dirigido
+## Ejemplo de Representación
 
-En un grafo no dirigido, una arista conecta dos vertices en ambos sentidos.
-
-Ejemplo:
+Tomaremos como ejemplo el grafo no dirigido mencionado en el material:
 
 ```text
-A --- B
+  A
+ / \
+B   C
 ```
 
-Aqui, si `A` esta conectado con `B`, entonces `B` tambien esta conectado con `A`.
+### Matriz de Adyacencia
 
-### Grafo dirigido
-
-En un grafo dirigido, las aristas tienen direccion.
-
-Ejemplo:
-
-```text
-A --> B
-```
-
-Aqui, la conexion va de `A` hacia `B`, pero no necesariamente de `B` hacia `A`.
-
-## Definiciones Basicas
-
-### Camino
-
-Un **camino** es una secuencia de aristas que permite llegar de un vertice a otro.
-
-### Circuito
-
-Un **circuito** es un camino que empieza y termina en el mismo vertice.
-
-### Ciclo
-
-Un **ciclo** es un circuito en el que no se repiten vertices, excepto el primero y el ultimo.
-
-### Grafo conectado
-
-Un grafo es **conectado** si existe un camino entre cualquier par de vertices.
-
-## Representacion Computacional
-
-Las dos formas mas comunes de representar un grafo en una computadora son:
-
-1. **Matriz de adyacencia**
-2. **Lista de adyacencia**
-
-## Matriz de Adyacencia
-
-La matriz de adyacencia usa una tabla de `n x n`, donde `n` es el numero de vertices. En cada posicion se indica si existe o no una arista entre dos vertices.
-
-Su complejidad espacial es:
-
-```text
-Theta(n^2)
-```
-
-Es una buena opcion cuando el grafo tiene muchas aristas.
-
-### Ejemplo
-
-Supongamos el siguiente grafo no dirigido:
-
-```text
-A --- B
-|
-C
-```
-
-La matriz de adyacencia seria:
+Construimos una matriz de 3x3. Si existe una arista, colocamos `1`; en caso contrario `0`.
 
 ```text
     A B C
@@ -104,34 +45,9 @@ B [ 1 0 0 ]
 C [ 1 0 0 ]
 ```
 
-## Lista de Adyacencia
+### Lista de Adyacencia
 
-La lista de adyacencia guarda, para cada vertice, una lista de sus vecinos.
-
-Su complejidad espacial es:
-
-```text
-Theta(n + m)
-```
-
-donde:
-
-- `n` es el numero de vertices,
-- `m` es el numero de aristas.
-
-Es una mejor opcion cuando el grafo es disperso, es decir, cuando tiene pocas aristas respecto al numero de vertices.
-
-### Ejemplo
-
-Para el mismo grafo:
-
-```text
-A --- B
-|
-C
-```
-
-La lista de adyacencia seria:
+Mantenemos una lista de vecinos para cada vértice:
 
 ```text
 A = [B, C]
@@ -139,33 +55,21 @@ B = [A]
 C = [A]
 ```
 
-## Comparacion Rapida
+## Observaciones del Ejemplo
 
-- La **matriz de adyacencia** permite verificar rapidamente si existe una arista entre dos vertices.
-- La **lista de adyacencia** usa menos memoria en grafos dispersos.
-- La eleccion depende del problema que queremos resolver y de la densidad del grafo.
+- En la matriz de adyacencia se puede verificar rápidamente si hay conexión entre dos vértices.
+- En la lista de adyacencia, en un grafo no dirigido cada arista aparece dos veces (por ejemplo, A apunta a B, y B apunta a A).
+- La lista de adyacencia resulta mucho más eficiente en espacio cuando el grafo es disperso (cuando tiene pocas aristas en relación con el número de vértices).
 
-## Ejemplo de Modelado
+## Simulador
 
-Podemos representar un mapa sencillo de ciudades:
+Para explorar y visualizar la creación de grafos y sus representaciones en memoria de forma interactiva, pueden usar este simulador:
 
-```text
-Lima --- Cusco
-  |
-Arequipa
-```
-
-En este caso:
-
-- los vertices son las ciudades,
-- las aristas representan rutas o conexiones.
-
-Este tipo de modelado ayuda a resolver problemas como:
-
-- encontrar caminos,
-- analizar conectividad,
-- optimizar rutas.
+- [VisuAlgo: Estructuras de Datos para Grafos](https://visualgo.net/en/graphds)
 
 ## Conclusiones
 
-Los grafos son una estructura fundamental para modelar relaciones entre elementos. Comprender sus conceptos basicos y sus formas de representacion es importante porque sirve de base para algoritmos mas avanzados, como recorridos, caminos minimos y analisis de redes.
+Los grafos son una estructura de datos ampliamente utilizada para representar relaciones complejas entre objetos. 
+
+- Las representaciones más comunes son la **matriz de adyacencia** y la **lista de adyacencia**.
+- Cada una presenta ventajas y desventajas dependiendo de la densidad del grafo y de las operaciones a realizar, por lo que analizarlos considerando tiempo y espacio es fundamental.
