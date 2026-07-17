@@ -14,7 +14,7 @@ Existen dos algoritmos principales para hallarlo: **Kruskal** y **Prim**.
 ## 1. Algoritmo de Kruskal
 Kruskal ordena las aristas de menor a mayor peso y las va agregando al árbol siempre que no formen un ciclo (se apoya comúnmente en la estructura *Union-Find*).
 
-### Ejercicio Resuelto (Kruskal)
+### Ejercicio Resuelto
 Dado el siguiente grafo inicial de 6 vértices:
 
 ```text
@@ -131,7 +131,7 @@ Dado el siguiente grafo inicial de 6 vértices:
 ## 2. Algoritmo de Prim
 Prim comienza en un vértice cualquiera y en cada paso expande el árbol agregando la arista más barata que conecte un vértice ya visitado con uno no visitado.
 
-### Ejercicio Resuelto (Prim)
+### Ejercicio Resuelto
 Usando el mismo grafo inicial:
 
 ```text
