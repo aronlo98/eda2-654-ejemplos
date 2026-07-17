@@ -65,164 +65,117 @@ DFS(nodo_inicio):
 
 ## Ejemplos de Ejecución (Carrusel Interactivo)
 
-Desliza para ver la ejecución paso a paso de ambos algoritmos. Para estos ejemplos utilizaremos un **grafo complejo de 6 nodos** diseñado especialmente para tener convergencias (C y D apuntan a E), caminos múltiples (C apunta a E y F), y un **ciclo de regreso peligroso (F apunta a B)**, ilustrado usando **PlantUML**.
+Desliza para ver la ejecución paso a paso de ambos algoritmos. Para estos ejemplos utilizaremos un **grafo complejo de 6 nodos** diseñado especialmente para tener convergencias (C y D apuntan a E), caminos múltiples (C apunta a E y F), y un **ciclo de regreso peligroso (F apunta a B)**, ilustrado en **arte ASCII** puro.
+
+*Leyenda: `[ X ]` = No visitado, `* X *` = Visitado*
 
 ### Recorrido BFS (Nivel por Nivel)
 
 ````carousel
 **Planteamiento del Problema (BFS)**
 El objetivo es recorrer este grafo partiendo del nodo `A` utilizando una estructura de Cola (Queue). Para evitar ciclos infinitos, marcamos el nodo apenas entra a la cola.
-```plantuml
-@startuml
-node A
-node B
-node C
-node D
-node E
-node F
-
-A --> B
-A --> D
-B --> C
-D --> E
-C --> E
-C --> F
-E --> F
-F --> B
-@enduml
+```text
+           [ A ]
+          /     \
+         v       v
+ .---> [ B ]   [ D ]
+ |       |       |
+ |       v       v
+ |     [ C ]-->[ E ]
+ |       |       |
+ |       v       v
+ '---- [ F ]<----'
 ```
 <!-- slide -->
 **Paso 1**
 Iniciamos en `A`. Lo marcamos y encolamos. (Cola: `A`)
-```plantuml
-@startuml
-node A #A2D2FF
-node B
-node C
-node D
-node E
-node F
-
-A --> B
-A --> D
-B --> C
-D --> E
-C --> E
-C --> F
-E --> F
-F --> B
-@enduml
+```text
+           * A *
+          /     \
+         v       v
+ .---> [ B ]   [ D ]
+ |       |       |
+ |       v       v
+ |     [ C ]-->[ E ]
+ |       |       |
+ |       v       v
+ '---- [ F ]<----'
 ```
 <!-- slide -->
 **Paso 2**
 Desencolamos `A`. Visitamos y encolamos a sus vecinos `B` y `D`. (Cola: `B, D`)
-```plantuml
-@startuml
-node A #A2D2FF
-node B #A2D2FF
-node C
-node D #A2D2FF
-node E
-node F
-
-A --> B
-A --> D
-B --> C
-D --> E
-C --> E
-C --> F
-E --> F
-F --> B
-@enduml
+```text
+           * A *
+          /     \
+         v       v
+ .---> * B *   * D *
+ |       |       |
+ |       v       v
+ |     [ C ]-->[ E ]
+ |       |       |
+ |       v       v
+ '---- [ F ]<----'
 ```
 <!-- slide -->
 **Paso 3**
 Desencolamos `B`. Su único vecino es `C`. Lo marcamos y encolamos. (Cola: `D, C`)
-```plantuml
-@startuml
-node A #A2D2FF
-node B #A2D2FF
-node C #A2D2FF
-node D #A2D2FF
-node E
-node F
-
-A --> B
-A --> D
-B --> C
-D --> E
-C --> E
-C --> F
-E --> F
-F --> B
-@enduml
+```text
+           * A *
+          /     \
+         v       v
+ .---> * B *   * D *
+ |       |       |
+ |       v       v
+ |     * C *-->[ E ]
+ |       |       |
+ |       v       v
+ '---- [ F ]<----'
 ```
 <!-- slide -->
 **Paso 4**
 Desencolamos `D`. Su vecino es `E`. Lo marcamos y encolamos. (Cola: `C, E`)
-```plantuml
-@startuml
-node A #A2D2FF
-node B #A2D2FF
-node C #A2D2FF
-node D #A2D2FF
-node E #A2D2FF
-node F
-
-A --> B
-A --> D
-B --> C
-D --> E
-C --> E
-C --> F
-E --> F
-F --> B
-@enduml
+```text
+           * A *
+          /     \
+         v       v
+ .---> * B *   * D *
+ |       |       |
+ |       v       v
+ |     * C *-->* E *
+ |       |       |
+ |       v       v
+ '---- [ F ]<----'
 ```
 <!-- slide -->
 **Paso 5**
 Desencolamos `C`. Sus vecinos son `E` y `F`. Como `E` ya fue marcado en el paso anterior, solo encolamos `F`. (Cola: `E, F`)
-```plantuml
-@startuml
-node A #A2D2FF
-node B #A2D2FF
-node C #A2D2FF
-node D #A2D2FF
-node E #A2D2FF
-node F #A2D2FF
-
-A --> B
-A --> D
-B --> C
-D --> E
-C --> E
-C --> F
-E --> F
-F --> B
-@enduml
+```text
+           * A *
+          /     \
+         v       v
+ .---> * B *   * D *
+ |       |       |
+ |       v       v
+ |     * C *-->* E *
+ |       |       |
+ |       v       v
+ '---- * F *<----'
 ```
 <!-- slide -->
 **Paso 6 y final**
 Desencolamos `E` (su vecino `F` ya está marcado). Luego desencolamos `F` (su vecino `B` ¡ya estaba marcado desde el inicio!, evitando el ciclo).
 **Orden BFS: A, B, D, C, E, F**
-```plantuml
-@startuml
-node A #A2D2FF
-node B #A2D2FF
-node C #A2D2FF
-node D #A2D2FF
-node E #A2D2FF
-node F #A2D2FF
-
-A --> B
-A --> D
-B --> C
-D --> E
-C --> E
-C --> F
-E --> F
-F --> B
-@enduml
+```text
+           * A *
+          /     \
+         v       v
+ .---> * B *   * D *
+ |       |       |
+ |       v       v
+ |     * C *-->* E *
+ |       |       |
+ |       v       v
+ '---- * F *<----'
 ```
 ````
 
@@ -231,157 +184,108 @@ F --> B
 ````carousel
 **Planteamiento del Problema (DFS)**
 El objetivo es recorrer el mismo grafo partiendo del nodo `A` utilizando una Pila (Stack). También marcamos al entrar a la pila para evitar duplicados.
-```plantuml
-@startuml
-node A
-node B
-node C
-node D
-node E
-node F
-
-A --> B
-A --> D
-B --> C
-D --> E
-C --> E
-C --> F
-E --> F
-F --> B
-@enduml
+```text
+           [ A ]
+          /     \
+         v       v
+ .---> [ B ]   [ D ]
+ |       |       |
+ |       v       v
+ |     [ C ]-->[ E ]
+ |       |       |
+ |       v       v
+ '---- [ F ]<----'
 ```
 <!-- slide -->
 **Paso 1**
 Inicialmente apilamos y marcamos `A`. Lo desapilamos/visitamos, y apilamos a sus vecinos `D` y `B`. (Pila: `D, B`)
-```plantuml
-@startuml
-node A #FFB366
-node B #FFB366
-node C
-node D #FFB366
-node E
-node F
-
-A --> B
-A --> D
-B --> C
-D --> E
-C --> E
-C --> F
-E --> F
-F --> B
-@enduml
+```text
+           * A *
+          /     \
+         v       v
+ .---> * B *   * D *
+ |       |       |
+ |       v       v
+ |     [ C ]-->[ E ]
+ |       |       |
+ |       v       v
+ '---- [ F ]<----'
 ```
 <!-- slide -->
 **Paso 2**
 El tope es `B`. Desapilamos `B`. Su vecino es `C`. Lo apilamos y marcamos. (Pila: `D, C`)
-```plantuml
-@startuml
-node A #FFB366
-node B #FFB366
-node C #FFB366
-node D #FFB366
-node E
-node F
-
-A --> B
-A --> D
-B --> C
-D --> E
-C --> E
-C --> F
-E --> F
-F --> B
-@enduml
+```text
+           * A *
+          /     \
+         v       v
+ .---> * B *   * D *
+ |       |       |
+ |       v       v
+ |     * C *-->[ E ]
+ |       |       |
+ |       v       v
+ '---- [ F ]<----'
 ```
 <!-- slide -->
 **Paso 3**
 El tope es `C`. Desapilamos `C`. Sus vecinos son `F` y `E`. Ambos los apilamos. (Pila: `D, F, E`)
-```plantuml
-@startuml
-node A #FFB366
-node B #FFB366
-node C #FFB366
-node D #FFB366
-node E #FFB366
-node F #FFB366
-
-A --> B
-A --> D
-B --> C
-D --> E
-C --> E
-C --> F
-E --> F
-F --> B
-@enduml
+```text
+           * A *
+          /     \
+         v       v
+ .---> * B *   * D *
+ |       |       |
+ |       v       v
+ |     * C *-->* E *
+ |       |       |
+ |       v       v
+ '---- * F *<----'
 ```
 <!-- slide -->
 **Paso 4**
 El tope es `E`. Desapilamos `E`. Su único vecino es `F`, pero ya está marcado (¡cruce de ramas evitado!). (Pila: `D, F`)
-```plantuml
-@startuml
-node A #FFB366
-node B #FFB366
-node C #FFB366
-node D #FFB366
-node E #FFB366
-node F #FFB366
-
-A --> B
-A --> D
-B --> C
-D --> E
-C --> E
-C --> F
-E --> F
-F --> B
-@enduml
+```text
+           * A *
+          /     \
+         v       v
+ .---> * B *   * D *
+ |       |       |
+ |       v       v
+ |     * C *-->* E *
+ |       |       |
+ |       v       v
+ '---- * F *<----'
 ```
 <!-- slide -->
 **Paso 5**
 El tope es `F`. Desapilamos `F`. Su único vecino es `B`, pero ya está marcado (¡ciclo infinito evitado!). (Pila: `D`)
-```plantuml
-@startuml
-node A #FFB366
-node B #FFB366
-node C #FFB366
-node D #FFB366
-node E #FFB366
-node F #FFB366
-
-A --> B
-A --> D
-B --> C
-D --> E
-C --> E
-C --> F
-E --> F
-F --> B
-@enduml
+```text
+           * A *
+          /     \
+         v       v
+ .---> * B *   * D *
+ |       |       |
+ |       v       v
+ |     * C *-->* E *
+ |       |       |
+ |       v       v
+ '---- * F *<----'
 ```
 <!-- slide -->
 **Paso 6 y final**
 El tope final es `D`. Desapilamos `D`. Su vecino es `E`, el cual ya está marcado, así que terminamos.
 **Orden DFS: A, B, C, E, F, D**
-```plantuml
-@startuml
-node A #FFB366
-node B #FFB366
-node C #FFB366
-node D #FFB366
-node E #FFB366
-node F #FFB366
-
-A --> B
-A --> D
-B --> C
-D --> E
-C --> E
-C --> F
-E --> F
-F --> B
-@enduml
+```text
+           * A *
+          /     \
+         v       v
+ .---> * B *   * D *
+ |       |       |
+ |       v       v
+ |     * C *-->* E *
+ |       |       |
+ |       v       v
+ '---- * F *<----'
 ```
 ````
 
@@ -395,5 +299,3 @@ Para ver animaciones interactivas de ambos algoritmos y probar con grafos más g
 - **BFS** y **DFS** son las técnicas fundamentales para recorrer cualquier grafo, ambas con la misma eficiencia general `O(V + E)`.
 - **BFS** es ideal para encontrar el camino más corto en grafos (sin pesos), ya que explora como una onda expansiva concéntrica.
 - **DFS** es excelente para explorar caminos completos de un extremo a otro, resolver laberintos y, mediante la variante tricolor, detectar ciclos fácilmente.
-
-
